@@ -1,59 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Projecte "Futbol Femení I"
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Esta es una mini-aplicación de Laravel para gestionar equipos, estadios, jugadoras y partidos de fútbol femenino.
 
-## About Laravel
+El proyecto está construido con Laravel, Blade, Vite y Tailwind CSS, y sigue un patrón MVC.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Característica Principal**: Este proyecto **no utiliza base de datos**. Todos los datos se crean, leen, actualizan y borran almacenándolos directamente en la **sesión** de PHP (`SESSION_DRIVER=file`).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📋 Requisitos Previos
 
-## Learning Laravel
+Para poder ejecutar este proyecto, necesitarás tener instalado en tu máquina:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+-   **PHP** (v8.2 o superior)
+-   **Composer** (Gestor de dependencias de PHP)
+-   **Node.js** (v18 o superior)
+-   **npm** (Gestor de paquetes de Node, viene con Node.js)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## ⚙️ Instalación (Paso a Paso)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Sigue estas instrucciones en orden para configurar el proyecto correctamente.
 
-### Premium Partners
+### Paso 1: Configurar el Backend (Laravel)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1.  **Clonar o descargar el proyecto:**
+    Si tienes git, clona el repositorio. Si no, asegúrate de tener todos los archivos en una carpeta.
 
-## Contributing
+2.  **Navegar a la carpeta:**
+    Abre una terminal y entra en el directorio del proyecto.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    cd ruta-del-proyecto/futbol-femeni
+    ```
 
-## Code of Conduct
+3.  **Instalar dependencias de PHP:**
+    Composer leerá el archivo `composer.json` e instalará Laravel y todas las librerías necesarias.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    composer install
+    ```
 
-## Security Vulnerabilities
+4.  **Crear el archivo de entorno:**
+    Copia el archivo de ejemplo `.env.example` a un nuevo archivo llamado `.env`. Este archivo guarda tu configuración local.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    cp .env.example .env
+    ```
 
-## License
+5.  **Generar la clave de la aplicación:**
+    Laravel necesita esta clave única para encriptar datos y funcionar de forma segura.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```bash
+    php artisan key:generate
+    ```
+
+6.  **¡IMPORTANTE! Configurar la Sesión:**
+    Este es el paso más importante del proyecto. Abre el archivo `.env` que acabas de crear y busca la línea `SESSION_DRIVER`. Asegúrate de que esté configurada como `file`:
+
+    ```env
+    SESSION_DRIVER=file
+    ```
+
+    _Si dice `database` o cualquier otra cosa, el proyecto no funcionará como se espera, ya que toda la lógica de guardado depende de la sesión de archivos._
+
+### Paso 2: Configurar el Frontend (Vite + Tailwind)
+
+1.  **Instalar dependencias de Node.js:**
+    npm leerá el archivo `package.json` e instalará Vite, Tailwind CSS y sus plugins.
+    ```bash
+    npm install
+    ```
+
+---
+
+## 🚀 Ejecutar el Proyecto
+
+Para arrancar la aplicación, necesitarás **dos terminales** abiertas en la carpeta del proyecto.
+
+### Terminal 1: Iniciar Vite
+
+Esta terminal se encarga de compilar el CSS (Tailwind) y el JS, y se mantiene activa vigilando cambios en tus archivos de estilos (`guias.css`) o JS.
+
+````bash
+npm run dev
+
+### Terminal 2: Iniciar el Servidor de Laravel
+
+Esta terminal inicia el servidor web de PHP para que puedas ver la aplicación en tu navegador.
+
+```bash
+php artisan serve
+````

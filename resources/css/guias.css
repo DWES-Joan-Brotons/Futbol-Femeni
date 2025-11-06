@@ -1,138 +1,223 @@
-/* --- TEMÀTICA FUTBOL FEMENÍ --- */
+/* --- TEMÀTICA FUTBOL FEMENÍ v2 (PRO) --- */
 
-/* 1. Importem una font "esportiva" per als títols */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+/* 1. Importem dues fonts: una per a títols (Oswald) i una per a text (Roboto) */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@400;700&display=swap');
 
-/* 2. Estils generals del cos */
+/* 2. Fons de Gespa per a tota la pàgina */
 body {
-    background-color: #f4f9f4; /* Un verd gespa molt molt clar */
+    /* Pots canviar aquesta URL per una textura de gespa que t'agradi més */
+    background-image: url('https://www.transparenttextures.com/patterns/fresh-snow.png');
+    background-color: #013214; /* Un verd molt fosc de base */
+    font-family: 'Roboto', sans-serif;
 }
 
-/* 3. Títols (H1, H2...) */
-h1, h2, h3, h4, h5 {
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase; /* Lletres majúscules, estil esportiu */
+/* 3. Contingut Principal (Panell Central) */
+/* El 'div.container' que embolcalla el teu '@yield('content')' */
+body > div.container {
+    background-color: rgba(255, 255, 255, 0.97); /* Molt opac per llegir bé */
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    padding: 2.5rem !important; /* Més espai interior */
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    
+    /* Animació d'entrada */
+    animation: fadeIn 0.6s ease-out;
 }
 
-/* Títol principal de cada pàgina (ex: "Guia d'Equips") */
-h1.text-3xl {
-    color: #014d21; /* Verd fosc */
-    border-bottom: 4px solid #014d21; /* Línia de fons gruixuda */
-    padding-bottom: 10px;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* 4. Menú de Navegació */
-/* Sobreescrivim el 'bg-blue-800' per un verd fosc */
+/* 4. Menú de Navegació (Estil Marcador) */
 nav.bg-blue-800 {
-    background-color: #014d21 !important; /* Verd fosc (com gespa de nit) */
-    border-bottom: 4px solid #ffffff; /* Línia blanca com les del camp */
+    background: linear-gradient(to bottom, #1a1a1a, #0a0a0a) !important; /* Negre/Gris fosc */
+    border-bottom: 6px solid #f0f0f0 !important; /* Línia blanca */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+}
+nav.bg-blue-800 a {
+    color: #f0f0f0 !important;
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 nav.bg-blue-800 a:hover {
-    color: #a7f3d0 !important; /* Un verd clar al passar el ratolí */
-    transform: scale(1.1);
+    background-color: #008a3e !important; /* Verd en passar */
+    color: #fff !important;
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px #fff;
 }
 
-/* 5. Taules (Llistats) */
-/* Capçalera de la taula (sobrescriu 'bg-gray-200') */
+/* 5. Títols Principals (amb icona ⚽) */
+h1.text-3xl {
+    font-family: 'Oswald', sans-serif;
+    color: #014d21 !important;
+    text-transform: uppercase;
+    border-bottom: 4px solid #014d21;
+    padding-bottom: 15px;
+    letter-spacing: 1px;
+}
+h1.text-3xl::before {
+    content: '⚽';
+    margin-right: 15px;
+    opacity: 0.8;
+}
+
+/* 6. Taules (Estil Camp de Futbol) */
 table thead.bg-gray-200 {
     background-color: #014d21 !important; /* Verd fosc */
     color: white;
-}
-table thead th {
+    font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
-
-/* Files de la taula (efecte "zebra" verd) */
+table th {
+    padding: 1rem !important;
+}
+/* Files de la taula */
+table tbody tr {
+    /* Línies blanques del camp */
+    border-bottom: 2px solid white; 
+}
+/* Efecte Zebra semitransparent */
+table tbody tr:nth-child(odd) {
+    background-color: rgba(240, 240, 240, 0.7) !important;
+}
 table tbody tr:nth-child(even) {
-    background-color: #e6f4e6; /* Verd clar per files parells */
+    background-color: rgba(220, 240, 220, 0.7) !important; /* Verd clar */
 }
-/* Efecte al passar el ratolí */
+/* Hover potent */
 table tbody tr.hover\:bg-gray-100:hover {
-    background-color: #cce8cc !important; /* Verd mig al passar */
+    background-color: #a7f3d0 !important;
+    color: #014d21;
+    transform: scale(1.015);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.2s ease-out;
 }
-/* Enllaços dins les taules */
-table tbody a.text-blue-700 {
+/* Enllaços de la taula */
+table a.text-blue-700 {
     color: #014d21 !important;
-    font-weight: bold;
-}
-table tbody a.text-blue-700:hover {
-    color: #008a3e !important;
+    font-weight: 700; /* Més gruixut */
 }
 
-
-/* 6. Botons i Enllaços */
-/* Botons principals (ex: "+ Nou equip") */
+/* 7. Botons (Estil "Píndola" modern) */
 a.bg-blue-600, button.bg-blue-600 {
-    background-color: #008a3e !important; /* Verd mig */
+    background: linear-gradient(to bottom, #008a3e, #006b2f) !important;
     color: white !important;
-    font-weight: bold;
+    font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
-    border-radius: 4px !important;
-    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+    border: 2px solid white !important;
+    border-radius: 50px !important; /* Píndola */
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
 }
 a.bg-blue-600:hover, button.bg-blue-600:hover {
-    background-color: #014d21 !important; /* Verd fosc al passar */
-    transform: scale(1.05);
+    background: linear-gradient(to bottom, #009e47, #008a3e) !important;
+    box-shadow: 0 6px 20px rgba(0, 138, 62, 0.4);
+    transform: translateY(-3px);
+}
+a.bg-blue-600:active, button.bg-blue-600:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* 7. Formularis (Pàgines 'create') */
-/* Títols dels formularis */
+/* 8. Formularis (Pàgines 'create') */
 h1.text-2xl {
+    font-family: 'Oswald', sans-serif;
     color: #014d21;
 }
-/* Etiquetes (Nom:, Estadi:, etc.) */
 label.block {
     color: #014d21;
-    font-weight: bold;
+    font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
 }
-/* Camps d'entrada */
-input[type="text"].border, 
-input[type="number"].border, 
-input[type="date"].border, 
-select.border {
-    border: 2px solid #014d21 !important; /* Vora verda */
-    background-color: #fafffa; /* Verd molt clar */
-    transition: all 0.2s;
+input.border, select.border {
+    border: 2px solid #014d21 !important;
+    border-radius: 8px !important;
+    padding: 0.75rem !important;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
-/* Efecte al fer clic (focus) */
-input[type="text"].border:focus, 
-input[type="number"].border:focus, 
-input[type="date"].border:focus, 
-select.border:focus {
-    background-color: #fff;
+input.border:focus, select.border:focus {
+    background-color: #fafffa;
     border-color: #008a3e !important;
-    box-shadow: 0 0 8px rgba(0,138,62,0.3); /* Ombra verda */
+    box-shadow: 0 0 15px rgba(0, 138, 62, 0.5) !important;
     outline: none;
 }
 
-/* 8. Alertes (Missatges d'èxit i error) */
-/* Èxit (verd) */
-div.bg-green-100 {
-    background-color: #e6f4e6 !important;
-    border: 2px solid #008a3e !important;
-    color: #014d21 !important;
-    font-weight: bold;
-}
-/* Error (vermell) */
-div.bg-red-100 {
-    background-color: #fbe9e7 !important;
-    border: 2px solid #d9534f !important;
-    color: #b71c1c !important;
-    font-weight: bold;
-}
-
-/* 9. Components de Detall (Pàgines 'show') */
-/* Caixa blanca on surt el detall */
+/* 9. Targetes de Detall (Estil Cromo) */
 div.shadow-md {
-    border: 2px solid #014d21;
-    background-image: linear-gradient(to bottom, #ffffff, #f4f9f4); /* De blanc a verd clar */
+    background: linear-gradient(to bottom, #ffffff, #f9fef9);
+    border: 1px solid #ddd;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    border-top: 8px solid #014d21 !important; /* Vora superior verda */
 }
-/* Enllaç "Tornar al llistat" */
+/* Títol del Cromo (Nom del jugador/estadi) */
+div.shadow-md h1.text-3xl {
+    border-bottom: 2px solid #eee;
+}
+/* Dades del cromo */
+div.shadow-md p {
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #eee;
+}
+div.shadow-md p strong {
+    color: #014d21;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    width: 150px;
+    display: inline-block;
+}
+/* Enllaç de "Tornar" */
 div.mt-6 a.text-blue-600 {
     color: #008a3e !important;
     font-weight: bold;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
 }
 div.mt-6 a.text-blue-600:hover {
     color: #014d21 !important;
+    text-decoration: underline;
+}
+
+/* 10. Alertes (Més visuals, amb icones) */
+div.bg-green-100, div.bg-red-100 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px !important;
+    border-width: 2px !important;
+    padding: 1.25rem !important;
+}
+div.bg-green-100 {
+    background-color: #e6f4e6 !important;
+    border-color: #008a3e !important;
+    color: #014d21 !important;
+}
+div.bg-green-100::before {
+    content: '✓ ';
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+div.bg-red-100 {
+    background-color: #fbe9e7 !important;
+    border-color: #d9534f !important;
+    color: #b71c1c !important;
+}
+div.bg-red-100::before {
+    content: '✕ ';
+    font-size: 1.2rem;
+    margin-right: 10px;
 }
