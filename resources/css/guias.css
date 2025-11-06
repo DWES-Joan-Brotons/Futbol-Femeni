@@ -1,0 +1,138 @@
+/* --- TEMÀTICA FUTBOL FEMENÍ --- */
+
+/* 1. Importem una font "esportiva" per als títols */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+
+/* 2. Estils generals del cos */
+body {
+    background-color: #f4f9f4; /* Un verd gespa molt molt clar */
+}
+
+/* 3. Títols (H1, H2...) */
+h1, h2, h3, h4, h5 {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase; /* Lletres majúscules, estil esportiu */
+}
+
+/* Títol principal de cada pàgina (ex: "Guia d'Equips") */
+h1.text-3xl {
+    color: #014d21; /* Verd fosc */
+    border-bottom: 4px solid #014d21; /* Línia de fons gruixuda */
+    padding-bottom: 10px;
+}
+
+/* 4. Menú de Navegació */
+/* Sobreescrivim el 'bg-blue-800' per un verd fosc */
+nav.bg-blue-800 {
+    background-color: #014d21 !important; /* Verd fosc (com gespa de nit) */
+    border-bottom: 4px solid #ffffff; /* Línia blanca com les del camp */
+}
+nav.bg-blue-800 a:hover {
+    color: #a7f3d0 !important; /* Un verd clar al passar el ratolí */
+    transform: scale(1.1);
+}
+
+/* 5. Taules (Llistats) */
+/* Capçalera de la taula (sobrescriu 'bg-gray-200') */
+table thead.bg-gray-200 {
+    background-color: #014d21 !important; /* Verd fosc */
+    color: white;
+}
+table thead th {
+    text-transform: uppercase;
+}
+
+/* Files de la taula (efecte "zebra" verd) */
+table tbody tr:nth-child(even) {
+    background-color: #e6f4e6; /* Verd clar per files parells */
+}
+/* Efecte al passar el ratolí */
+table tbody tr.hover\:bg-gray-100:hover {
+    background-color: #cce8cc !important; /* Verd mig al passar */
+}
+/* Enllaços dins les taules */
+table tbody a.text-blue-700 {
+    color: #014d21 !important;
+    font-weight: bold;
+}
+table tbody a.text-blue-700:hover {
+    color: #008a3e !important;
+}
+
+
+/* 6. Botons i Enllaços */
+/* Botons principals (ex: "+ Nou equip") */
+a.bg-blue-600, button.bg-blue-600 {
+    background-color: #008a3e !important; /* Verd mig */
+    color: white !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 4px !important;
+    transition: all 0.2s ease;
+}
+a.bg-blue-600:hover, button.bg-blue-600:hover {
+    background-color: #014d21 !important; /* Verd fosc al passar */
+    transform: scale(1.05);
+}
+
+/* 7. Formularis (Pàgines 'create') */
+/* Títols dels formularis */
+h1.text-2xl {
+    color: #014d21;
+}
+/* Etiquetes (Nom:, Estadi:, etc.) */
+label.block {
+    color: #014d21;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+/* Camps d'entrada */
+input[type="text"].border, 
+input[type="number"].border, 
+input[type="date"].border, 
+select.border {
+    border: 2px solid #014d21 !important; /* Vora verda */
+    background-color: #fafffa; /* Verd molt clar */
+    transition: all 0.2s;
+}
+/* Efecte al fer clic (focus) */
+input[type="text"].border:focus, 
+input[type="number"].border:focus, 
+input[type="date"].border:focus, 
+select.border:focus {
+    background-color: #fff;
+    border-color: #008a3e !important;
+    box-shadow: 0 0 8px rgba(0,138,62,0.3); /* Ombra verda */
+    outline: none;
+}
+
+/* 8. Alertes (Missatges d'èxit i error) */
+/* Èxit (verd) */
+div.bg-green-100 {
+    background-color: #e6f4e6 !important;
+    border: 2px solid #008a3e !important;
+    color: #014d21 !important;
+    font-weight: bold;
+}
+/* Error (vermell) */
+div.bg-red-100 {
+    background-color: #fbe9e7 !important;
+    border: 2px solid #d9534f !important;
+    color: #b71c1c !important;
+    font-weight: bold;
+}
+
+/* 9. Components de Detall (Pàgines 'show') */
+/* Caixa blanca on surt el detall */
+div.shadow-md {
+    border: 2px solid #014d21;
+    background-image: linear-gradient(to bottom, #ffffff, #f4f9f4); /* De blanc a verd clar */
+}
+/* Enllaç "Tornar al llistat" */
+div.mt-6 a.text-blue-600 {
+    color: #008a3e !important;
+    font-weight: bold;
+}
+div.mt-6 a.text-blue-600:hover {
+    color: #014d21 !important;
+}
