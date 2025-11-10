@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Afegir nou estadi')
+@section('title', 'Afegir nou equip')
 
 @section('content')
 <h1 class="text-2xl font-bold mb-4">Afegir nou estadi</h1>
@@ -19,16 +19,8 @@
     <input type="text" name="nom" id="nom" value="{{ old('nom') }}" class="border p-2 w-full">
   </div>
   <div>
-    <label for="ciutat" class="block font-bold">Ciutat:</label>
-    <input type="text" name="ciutat" id="ciutat" value="{{ old('ciutat') }}" class="border p-2 w-full">
-  </div>
-  <div>
     <label for="capacitat" class="block font-bold">Capacitat:</label>
-    <input type="number" name="capacitat" id="capacitat" value="{{ old('capacitat') }}" class="border p-2 w-full">
-  </div>
-  <div>
-    <label for="equip_principal" class="block font-bold">Equip Principal:</label>
-    <input type="text" name="equip_principal" id="equip_principal" value="{{ old('equip_principal') }}" class="border p-2 w-full">
+    <input type="text" name="capacitat" id="capacitat" value="{{ old('capacitat') }}" class="border p-2 w-full">
   </div>
   <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Afegir</button>
 </form>

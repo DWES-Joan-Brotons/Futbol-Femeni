@@ -2,11 +2,5 @@
 @section('title', "Detall d'Estadi")
 
 @section('content')
-{{-- Usem el nou component <x-estadi> --}}
-<x-estadi 
-  :nom="$estadi['nom']" 
-  :ciutat="$estadi['ciutat']" 
-  :capacitat="$estadi['capacitat']" 
-  :equip_principal="$estadi['equip_principal']"
-/>
+<x-estadi :nom="$estadi->nom"   :capacitat="$estadi->capacitat" :equips="$estadi->Equips"/>
 @endsection

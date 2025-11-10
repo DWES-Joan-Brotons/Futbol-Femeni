@@ -2,5 +2,5 @@
 @section('title', "Detall d'Equip")
 
 @section('content')
-<x-equip :nom="$equip['nom']" :estadi="$equip['estadi']" :titols="$equip['titols']"/>
+<x-equip :nom="$equip->nom" :estadi="$equip->estadi->nom" :titols="$equip->titols"/>
 @endsection

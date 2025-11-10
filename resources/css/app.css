@@ -1,16 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import 'tailwindcss';
+@import './guias.css'; /* <<< AFEGEIX AQUESTA LÍNIA */
 
-/* @import './equips.css'; */
-
-
-/* Importem els nostres estils personalitzats (Fase 5) 
-  Els posem al final per si volem sobreescriure alguna cosa de Tailwind.
-*/
-@import './guias.css';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';

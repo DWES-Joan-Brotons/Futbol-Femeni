@@ -21,13 +21,13 @@
   </tr>
   </thead>
   <tbody>
-  @foreach($equips as $key => $equip)
+  @foreach($equips as  $equip)
     <tr class="hover:bg-gray-100">
       <td class="border border-gray-300 p-2">
-        <a href="{{ route('equips.show', $key) }}" class="text-blue-700 hover:underline">{{ $equip['nom'] }}</a>
+        <a href="{{ route('equips.show', $equip->id) }}" class="text-blue-700 hover:underline">{{ $equip->nom }}</a>
       </td>
-      <td class="border border-gray-300 p-2">{{ $equip['estadi'] }}</td>
-      <td class="border border-gray-300 p-2">{{ $equip['titols'] }}</td>
+      <td class="border border-gray-300 p-2">{{ $equip->estadi->nom }}</td>
+      <td class="border border-gray-300 p-2">{{ $equip->titols }}</td>
     </tr>
   @endforeach
   </tbody>
