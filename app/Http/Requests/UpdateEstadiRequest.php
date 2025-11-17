@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateEquipRequest extends FormRequest
+class UpdateEstadiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +22,16 @@ class UpdateEquipRequest extends FormRequest
      */
     public function rules(): array
     {
-        $equipId = $this->route('equip')->id;
+        $estadiId = $this->route('estadi')->id;
 
         return [
-            'nom'    => [
+            'nom' => [
                 'required',
+                'string',
                 'min:3',
-                Rule::unique('equips')->ignore($equipId),
+                Rule::unique('estadis')->ignore($estadiId),
             ],
-            'estadi_id' => 'required|integer|exists:estadis,id',
-            'titols' => 'required|integer|min:0'
+            'capacitat' => 'required|integer|min:1',
         ];
     }
 }

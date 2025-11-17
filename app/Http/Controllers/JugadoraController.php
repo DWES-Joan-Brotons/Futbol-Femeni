@@ -2,55 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Session;
+use App\Models\Jugadora;
+use App\Models\Equip;
+use App\Services\JugadoraService;
+use App\Http\Requests\StoreJugadoraRequest;
+use App\Http\Requests\UpdateJugadoraRequest;
 
 class JugadoraController extends Controller
 {
-    public $jugadores = [
-        ['id' => 1, 'nom' => 'Alexia Putellas', 'equip' => 'Barça Femení', 'posicio' => 'Migcampista'],
-        ['id' => 2, 'nom' => 'Esther González', 'equip' => 'Atlètic de Madrid', 'posicio' => 'Davantera'],
-        ['id' => 3, 'nom' => 'Misa Rodríguez', 'equip' => 'Real Madrid Femení', 'posicio' => 'Portera'],
-    ];
+    public function __construct(private JugadoraService $servei) {}
 
     public function index() 
     {
-        $jugadores = Session::get('jugadores', $this->jugadores);
+        $jugadores = $this->servei->llistar();
         return view('jugadores.index', compact('jugadores'));
     }
 
     public function create()
     {
+        $equips = Equip::all();
         $posicions = ['Portera', 'Defensa', 'Migcampista', 'Davantera'];
-        return view('jugadores.create', compact('posicions'));
+        return view('jugadores.create', compact('posicions', 'equips'));
     }
 
-    public function store(Request $request)
+    public function store(StoreJugadoraRequest $request)
     {
-        $validated = $request->validate([
-            'nom' => 'required|string|min:3',
-            'equip' => 'required|string|min:2',
-            'posicio' => ['required', Rule::in(['Portera', 'Defensa', 'Migcampista', 'Davantera'])],
-        ]);
-
-        $jugadores = Session::get('jugadores', $this->jugadores);
-
-        $jugadores[] = $validated;
-        Session::put('jugadores', $jugadores);
-
+        $this->servei->guardar($request->validated());
         return redirect()->route('jugadores.index')
                         ->with('success', 'Jugadora creada correctament.');
     }
 
-    public function show(int $id)
+    public function show(Jugadora $jugadora)
     {
-        $jugadores = Session::get('jugadores', $this->jugadores);
-
-        abort_if(!isset($jugadores[$id]), 404, 'Jugadora no trobada');
-        
-        $jugadora = $jugadores[$id];
-        
+        $jugadora->load('equip');
         return view('jugadores.show', compact('jugadora'));
+    }
+
+    public function edit(Jugadora $jugadora)
+    {
+        $equips = Equip::all();
+        $posicions = ['Portera', 'Defensa', 'Migcampista', 'Davantera'];
+        return view('jugadores.edit', compact('jugadora', 'equips', 'posicions'));
+    }
+
+    public function update(UpdateJugadoraRequest $request, Jugadora $jugadora)
+    {
+        $this->servei->actualitzar($jugadora->id, $request->validated());
+        return redirect()->route('jugadores.index')
+                        ->with('success', 'Jugadora actualitzada correctament.');
+    }
+
+    public function destroy(Jugadora $jugadora)
+    {
+        $this->servei->eliminar($jugadora->id);
+        return redirect()->route('jugadores.index')
+                        ->with('success', 'Jugadora eliminada correctament.');
     }
 }

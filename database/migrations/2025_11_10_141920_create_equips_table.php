@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('equips', function (Blueprint $table) {
             $table->id();
             $table->string('nom')->unique();
-            $table->foreignId('estadi_id')->constrained();
+            $table->foreignId('estadi_id')->nullable()->constrained()->nullOnDelete();
             $table->integer('titols')->default(0);
             $table->timestamps();
         });

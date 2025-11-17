@@ -2,58 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use App\Models\Partit;
+use App\Models\Equip;
+use App\Models\Estadi;
+use App\Services\PartitService;
+use App\Http\Requests\StorePartitRequest;
+use App\Http\Requests\UpdatePartitRequest;
 
 class PartitController extends Controller
 {
-    public $partits = [
-        ['id' => 1, 'local' => 'Barça Femení', 'visitant' => 'Atlètic de Madrid', 'data' => '2024-11-30', 'resultat' => null],
-        ['id' => 2, 'local' => 'Real Madrid Femení', 'visitant' => 'Barça Femení', 'data' => '2024-12-15', 'resultat' => '0-3'],
-    ];
+    public function __construct(private PartitService $servei) {}
 
     public function index()
     {
-        $partits = Session::get('partits', $this->partits);
+        $partits = $this->servei->llistar();
         return view('partits.index', compact('partits'));
     }
 
     public function create()
     {
-        return view('partits.create');
+        $equips = Equip::all();
+        $estadis = Estadi::all();
+        return view('partits.create', compact('equips', 'estadis'));
     }
 
-    public function store(Request $request)
+    public function store(StorePartitRequest $request)
     {
-        $messages = [
-            'visitant.different' => 'L\'equip visitant ha de ser diferent de l\'equip local.',
-            'resultat.regex' => 'El format del resultat ha de ser N-N (ex. 2-1).',
-        ];
-
-        $validated = $request->validate([
-            'local' => 'required|string|min:2',
-            'visitant' => 'required|string|min:2|different:local',
-            'data' => 'required|date_format:Y-m-d',
-            'resultat' => 'nullable|regex:/^\d+-\d+$/',
-        ], $messages);
-
-        $partits = Session::get('partits', $this->partits);
-
-        $partits[] = $validated;
-        Session::put('partits', $partits);
-
+        $this->servei->guardar($request->validated());
         return redirect()->route('partits.index')
                         ->with('success', 'Partit creat correctament.');
     }
 
-    public function show(int $id)
+    public function show(Partit $partit)
     {
-        $partits = Session::get('partits', $this->partits);
-
-        abort_if(!isset($partits[$id]), 404, 'Partit no trobat');
-        
-        $partit = $partits[$id];
-        
+        $partit->load('equipLocal', 'equipVisitant', 'estadi');
         return view('partits.show', compact('partit'));
+    }
+
+    public function edit(Partit $partit)
+    {
+        $equips = Equip::all();
+        $estadis = Estadi::all();
+        return view('partits.edit', compact('partit', 'equips', 'estadis'));
+    }
+
+    public function update(UpdatePartitRequest $request, Partit $partit)
+    {
+        $this->servei->actualitzar($partit->id, $request->validated());
+        return redirect()->route('partits.index')
+                        ->with('success', 'Partit actualitzat correctament.');
+    }
+
+    public function destroy(Partit $partit)
+    {
+        $this->servei->eliminar($partit->id);
+        return redirect()->route('partits.index')
+                        ->with('success', 'Partit eliminat correctament.');
     }
 }

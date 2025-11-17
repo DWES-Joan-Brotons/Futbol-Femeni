@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateEquipRequest extends FormRequest
+class StoreEstadiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +21,9 @@ class UpdateEquipRequest extends FormRequest
      */
     public function rules(): array
     {
-        $equipId = $this->route('equip')->id;
-
         return [
-            'nom'    => [
-                'required',
-                'min:3',
-                Rule::unique('equips')->ignore($equipId),
-            ],
-            'estadi_id' => 'required|integer|exists:estadis,id',
-            'titols' => 'required|integer|min:0'
+            'nom' => 'required|string|min:3|unique:estadis,nom',
+            'capacitat' => 'required|integer|min:1',
         ];
     }
 }

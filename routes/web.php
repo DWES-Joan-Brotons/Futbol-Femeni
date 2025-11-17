@@ -11,6 +11,8 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::resource('estadis', EstadiController::class);
-Route::resource('jugadores', JugadoraController::class);
 Route::resource('partits', PartitController::class);
 Route::resource('equips', EquipController::class);
+
+// Solució: Indiquem manualment el nom del paràmetre
+Route::resource('jugadores', JugadoraController::class)->parameter('jugadores', 'jugadora');

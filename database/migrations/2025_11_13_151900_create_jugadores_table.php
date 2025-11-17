@@ -11,20 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jugadores', function (Blueprint $table) {
+        Schema::create('jugadoras', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('equip_id')->constrained()->cascadeOnDelete();
             $table->string('nom');
-            
-            // Relació 1:N amb equips
-            $table->foreignId('equip_id')
-                  ->constrained('equips')
-                  ->onDelete('cascade'); // Opcional: esborra jugadores si s'esborra l'equip
-
             $table->date('data_naixement');
             $table->integer('dorsal');
-            $table->string('posicio');
-            $table->string('foto')->nullable(); // La foto pot ser opcional
-            
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jugadores');
+        Schema::dropIfExists('jugadoras');
     }
 };

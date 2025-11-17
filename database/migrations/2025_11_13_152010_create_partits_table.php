@@ -13,21 +13,13 @@ return new class extends Migration
     {
         Schema::create('partits', function (Blueprint $table) {
             $table->id();
-            
-            // Relacions N:1 amb equips
-            $table->foreignId('local_id')->constrained('equips')->onDelete('cascade');
-            $table->foreignId('visitant_id')->constrained('equips')->onDelete('cascade');
-            
-            // Relació N:1 amb estadi
-            $table->foreignId('estadi_id')->constrained('estadis')->onDelete('cascade');
-
-            $table->dateTime('data'); // Data i hora del partit
+            $table->foreignId('local_id')->constrained('equips')->cascadeOnDelete();
+            $table->foreignId('visitant_id')->constrained('equips')->cascadeOnDelete();
+            $table->foreignId('estadi_id')->nullable()->constrained()->nullOnDelete();
+            $table->dateTime('data');
             $table->integer('jornada');
-            
-            // Gols (separats per a millor integritat de dades)
-            $table->integer('gols_local')->nullable();
-            $table->integer('gols_visitant')->nullable();
-
+            $table->string('gols_local')->nullable();
+            $table->string('gols_visitant')->nullable();
             $table->timestamps();
         });
     }
