@@ -21,8 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',     // <--- AÑADIDO
+        'team_id',
     ];
 
+    public function equip()
+    {
+        return $this->belongsTo(Equip::class, 'team_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

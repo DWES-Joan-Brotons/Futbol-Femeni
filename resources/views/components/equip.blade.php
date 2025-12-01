@@ -5,6 +5,12 @@
       <div class="flex-shrink-0">
           <img src="{{ Storage::url($escut) }}" alt="Escut de {{ $nom }}" class="h-16 w-16 object-contain">
       </div>
+  @else
+      <div class="flex-shrink-0">
+          <div class="h-16 w-16 bg-gray-200 flex items-center justify-center text-gray-500">
+              No Escut
+          </div>
+      </div>
   @endif
   
   <div>

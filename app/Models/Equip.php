@@ -73,6 +73,6 @@ class Equip extends Model
     
     public function manager()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'team_id');
     }
 }
