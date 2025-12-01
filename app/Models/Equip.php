@@ -17,7 +17,7 @@ class Equip extends Model
     /**
      * @var string[]
      */
-    protected $fillable = ['nom', 'estadi_id', 'titols' ];
+    protected $fillable = ['nom', 'estadi_id', 'titols', 'escut']; // <--- AFEGIT 'escut'
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -42,32 +42,20 @@ class Equip extends Model
         return $this->hasMany(Partit::class, 'visitant_id');
     }
 
-    /**
-     * Defineix una relació que retorna un Query Builder 
-     * per a tots els partits (local o visitant).
-     */
     public function partits()
     {
         return Partit::where('local_id', $this->id)
                      ->orWhere('visitant_id', $this->id);
     }
 
-    /**
-     * Accessor per a $equip->partits
-     * Ara utilitza el mètode partits() per ser més eficient.
-     */
     public function getPartitsAttribute()
     {
         return $this->partits()->get();
     }
 
-    /**
-     * Accessor per a $equip->ultimsPartits
-     * Ara crida el mètode partits() que acabem de definir.
-     */
     public function getUltimsPartitsAttribute()
     {
-        return $this->partits() // Aquesta crida ara és vàlida
+        return $this->partits()
             ->where('data', '<=', Carbon::now())
             ->orderBy('data', 'desc')
             ->limit(5)
@@ -76,7 +64,6 @@ class Equip extends Model
 
     public function getEdatMitjanaAttribute(): ?float
     {
-        // Comprova que hi hagi jugadores per evitar divisió per zero si la col·lecció és buida
         if ($this->jugadores()->count() == 0) {
             return null;
         }
@@ -84,11 +71,8 @@ class Equip extends Model
         return $this->jugadores()->avg(DB::raw('TIMESTAMPDIFF(YEAR, data_naixement, CURDATE())'));
     }
     
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
     public function manager()
     {
-        return $this->hasOne(User::class   );
+        return $this->hasOne(User::class);
     }
 }

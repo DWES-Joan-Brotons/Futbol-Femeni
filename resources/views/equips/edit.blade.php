@@ -6,7 +6,7 @@
 
 @include('partials.messages')
 
-<form action="{{ route('equips.update', $equip) }}" method="POST" class="space-y-4">
+<form action="{{ route('equips.update', $equip) }}" method="POST" class="space-y-4" enctype="multipart/form-data">
   @csrf
   @method('PUT')
   
@@ -28,6 +28,19 @@
     <label for="titols" class="block font-bold">Títols:</label>
     <input type="number" name="titols" id="titols" value="{{ old('titols', $equip->titols) }}" class="border p-2 w-full">
   </div>
+
+  {{-- CAMP ESCUT EDICIÓ --}}
+  <div class="mb-4">
+    <label for="escut" class="block font-bold mb-1">Escut:</label>
+    <input type="file" name="escut" id="escut" class="w-full border p-2 bg-white rounded">
+    @if($equip->escut)
+        <div class="mt-2">
+            <p class="text-sm text-gray-600">Escut actual:</p>
+            <img src="{{ Storage::url($equip->escut) }}" alt="Escut actual" class="h-16 w-auto mt-1 object-contain">
+        </div>
+    @endif
+  </div>
+
   <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Actualitzar</button>
 </form>
 @endsection

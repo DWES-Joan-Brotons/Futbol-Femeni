@@ -2,7 +2,13 @@
 @section('title', "Detall d'Equip")
 
 @section('content')
-<x-equip :nom="$equip->nom" :estadi="$equip->estadi->nom ?? 'Sense estadi'" :titols="$equip->titols"/>
+{{-- Passem l'escut al component --}}
+<x-equip 
+    :nom="$equip->nom" 
+    :estadi="$equip->estadi->nom ?? 'Sense estadi'" 
+    :titols="$equip->titols"
+    :escut="$equip->escut"
+/>
 
 <div class="mt-4 p-4 bg-white rounded-lg shadow-md">
     <h3 class="text-lg font-semibold text-gray-700">Edat Mitjana de les Jugadores:</h3>
