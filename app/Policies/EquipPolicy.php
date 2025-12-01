@@ -7,6 +7,8 @@ use App\Models\User;
 
 class EquipPolicy
 {
+    // ...
+
     /**
      * Determina si l'usuari pot veure el model.
      */

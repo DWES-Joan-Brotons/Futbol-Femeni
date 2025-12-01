@@ -6,6 +6,7 @@ use App\Http\Controllers\EstadiController;
 use App\Http\Controllers\JugadoraController;
 use App\Http\Controllers\PartitController;
 use App\Http\Controllers\EquipController;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
@@ -22,16 +23,20 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    // Rutas de lectura para todos los autenticados
-    Route::resource('estadis', EstadiController::class)->only(['index', 'show']);
-    Route::resource('equips', EquipController::class)->only(['index', 'show']);
+    // Rutas accesibles per tothom autenticat (la Policy filtra permisos específics)
+    Route::resource('equips', EquipController::class); // <--- MOGUT AQUÍ
+    
+    // Rutas de lectura/escriptura generals
     Route::resource('partits', PartitController::class);
     Route::resource('jugadores', JugadoraController::class)->parameter('jugadores', 'jugadora');
+    
+    // Lectura per estadis
+    Route::resource('estadis', EstadiController::class)->only(['index', 'show']);
 
-    // Rutas SOLO para ADMIN (Modificar Equips y Estadis)
+    // Rutas SOLO para ADMIN
     Route::middleware(['role:admin'])->group(function () {
+        // Només l'admin pot modificar estadis
         Route::resource('estadis', EstadiController::class)->except(['index', 'show']);
-        Route::resource('equips', EquipController::class)->except(['index', 'show']);
     });
 });
 

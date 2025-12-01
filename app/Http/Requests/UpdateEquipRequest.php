@@ -9,7 +9,9 @@ class UpdateEquipRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        // Obtenim l'equip de la ruta i verifiquem si l'usuari pot actualitzar-lo
+        $equip = $this->route('equip');
+        return $this->user()->can('update', $equip);
     }
 
     public function rules(): array
@@ -24,7 +26,7 @@ class UpdateEquipRequest extends FormRequest
             ],
             'estadi_id' => 'required|integer|exists:estadis,id',
             'titols'    => 'required|integer|min:0',
-            'escut'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // <--- VALIDACIÓ AFEGIDA
+            'escut'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 }
