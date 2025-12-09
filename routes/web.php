@@ -6,6 +6,8 @@ use App\Http\Controllers\EstadiController;
 use App\Http\Controllers\JugadoraController;
 use App\Http\Controllers\PartitController;
 use App\Http\Controllers\EquipController;
+use Illuminate\Support\Facades\Session;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,5 +41,11 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('estadis', EstadiController::class)->except(['index', 'show']);
     });
 });
+Route::get('language/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'es', 'ca'])) {
+        Session::put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('language.switch');
 
 require __DIR__.'/auth.php';
