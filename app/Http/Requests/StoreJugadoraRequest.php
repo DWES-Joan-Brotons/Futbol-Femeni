@@ -7,43 +7,27 @@ use Carbon\Carbon;
 
 class StoreJugadoraRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return true;
+        $user = $this->user();
+        if ($user->role === 'admin') return true;
+        // Manager solo crea en su equipo
+        if ($user->role === 'manager') return $user->team_id == $this->input('equip_id');
+        return false;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         $dataMinima = Carbon::now()->subYears(16)->toDateString();
 
         return [
             'nom' => 'required|string|min:3',
-            'equip_id' => 'required|integer|exists:equips,id',
-            'data_naixement' => ['required', 'date', 'before_or_equal:' . $dataMinima],
+            'equip_id' => 'required|exists:equips,id',
             'dorsal' => 'required|integer|min:1|max:99',
-            'foto' => 'nullable|image|mimes:png|max:2048', // 2MB Max
-        ];
-    }
-
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'data_naixement.before_or_equal' => 'La jugadora ha de tenir almenys 16 anys.',
-            'foto.mimes' => 'La foto ha de ser un arxiu de tipus: png.',
-            'foto.max' => 'La foto no pot pesar més de 2MB.',
+            // Validación 16 años
+            'data_naixement' => ['required', 'date', 'before_or_equal:' . $dataMinima],
+            // Validación foto PNG y tamaño
+            'foto' => 'nullable|image|mimes:png|max:2048', 
         ];
     }
 }

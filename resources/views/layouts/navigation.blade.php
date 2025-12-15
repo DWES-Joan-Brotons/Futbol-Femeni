@@ -24,6 +24,18 @@
                     <x-nav-link :href="route('partits.index')" :active="request()->routeIs('partits.*')">
                         {{ __('Partits') }}
                     </x-nav-link>
+
+                    {{-- ENLLAÇOS DE CREACIÓ (NOMÉS VISIBLES SI TENS PERMÍS) --}}
+                    @can('create', App\Models\Equip::class)
+                        <x-nav-link :href="route('equips.create')" :active="request()->routeIs('equips.create')" class="text-blue-600">
+                            {{ __('+ Equip') }}
+                        </x-nav-link>
+                    @endcan
+                    @can('create', App\Models\Partit::class)
+                         <x-nav-link :href="route('partits.create')" :active="request()->routeIs('partits.create')" class="text-green-600">
+                            {{ __('+ Partit') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -126,6 +138,13 @@
             <x-responsive-nav-link :href="route('partits.index')" :active="request()->routeIs('partits.*')">
                 {{ __('Partits') }}
             </x-responsive-nav-link>
+
+            {{-- Responsive Links amb protecció --}}
+            @can('create', App\Models\Equip::class)
+                <x-responsive-nav-link :href="route('equips.create')">
+                    {{ __('+ Crear Equip') }}
+                </x-responsive-nav-link>
+            @endcan
         </div>
 
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">

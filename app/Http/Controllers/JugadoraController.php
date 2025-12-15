@@ -7,10 +7,17 @@ use App\Models\Equip;
 use App\Services\JugadoraService;
 use App\Http\Requests\StoreJugadoraRequest;
 use App\Http\Requests\UpdateJugadoraRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class JugadoraController extends Controller
 {
-    public function __construct(private JugadoraService $servei) {}
+    use AuthorizesRequests; // Importante si no está en el Controller base
+
+    public function __construct(private JugadoraService $servei) 
+    {
+        // Esto activa la seguridad automática basada en JugadoraPolicy
+        $this->authorizeResource(Jugadora::class, 'jugadora');
+    }
 
     public function index() 
     {
@@ -28,13 +35,11 @@ class JugadoraController extends Controller
     public function store(StoreJugadoraRequest $request)
     {
         $this->servei->guardar($request->validated());
-        return redirect()->route('jugadores.index')
-                        ->with('success', 'Jugadora creada correctament.');
+        return redirect()->route('jugadores.index')->with('success', 'Jugadora creada.');
     }
 
     public function show(Jugadora $jugadora)
     {
-        $jugadora->load('equip');
         return view('jugadores.show', compact('jugadora'));
     }
 
@@ -48,14 +53,12 @@ class JugadoraController extends Controller
     public function update(UpdateJugadoraRequest $request, Jugadora $jugadora)
     {
         $this->servei->actualitzar($jugadora->id, $request->validated());
-        return redirect()->route('jugadores.index')
-                        ->with('success', 'Jugadora actualitzada correctament.');
+        return redirect()->route('jugadores.index')->with('success', 'Actualitzada.');
     }
 
     public function destroy(Jugadora $jugadora)
     {
         $this->servei->eliminar($jugadora->id);
-        return redirect()->route('jugadores.index')
-                        ->with('success', 'Jugadora eliminada correctament.');
+        return redirect()->route('jugadores.index')->with('success', 'Eliminada.');
     }
 }

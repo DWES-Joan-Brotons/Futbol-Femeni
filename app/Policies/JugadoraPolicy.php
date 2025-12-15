@@ -13,12 +13,12 @@ class JugadoraPolicy
     public function create(User $user): bool
     {
         // Admin o Manager con equipo asignado
-        return $user->role === 'admin' || ($user->role === 'manager' && $user->team_id !== null);
+        return $user->role === 'admin' || ($user->role === 'manager' && $user->team_id);
     }
 
     public function update(User $user, Jugadora $jugadora): bool
     {
-        // Admin o Manager del mismo equipo
+        // Admin o Manager del MISMO equipo
         return $user->role === 'admin' || 
                ($user->role === 'manager' && $user->team_id === $jugadora->equip_id);
     }

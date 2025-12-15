@@ -12,20 +12,16 @@ class PartitPolicy
 
     public function create(User $user): bool
     {
-        // Solo admin puede crear partidos manualmente
+        // "No es permet crear partits manualment" -> Solo admin por mantenimiento
         return $user->role === 'admin';
     }
 
     public function update(User $user, Partit $partit): bool
     {
         if ($user->role === 'admin') return true;
-
-        // Árbitro solo si está asignado al partido
-        if ($user->role === 'arbitre') {
-            return $user->id === $partit->arbitre_id;
-        }
-
-        return false;
+        
+        // Árbitros: "poden modificar el resultat... només si són l’àrbitre assignat"
+        return $user->role === 'arbitre' && $user->id === $partit->arbitre_id;
     }
 
     public function delete(User $user, Partit $partit): bool

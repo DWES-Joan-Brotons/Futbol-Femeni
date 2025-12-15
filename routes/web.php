@@ -7,7 +7,10 @@ use App\Http\Controllers\JugadoraController;
 use App\Http\Controllers\PartitController;
 use App\Http\Controllers\EquipController;
 use Illuminate\Support\Facades\Session;
-
+use App\Models\User;
+use App\Models\Partit;
+use App\Mail\ArbitreAssignacions;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,5 +50,27 @@ Route::get('language/{locale}', function ($locale) {
     }
     return redirect()->back();
 })->name('language.switch');
+
+Route::get('/enviar-arbitres', function () {
+    // 1. Obtenim tots els usuaris amb rol 'arbitre'
+    $arbitres = User::where('role', 'arbitre')->get();
+    $comptador = 0;
+
+    foreach ($arbitres as $arbitre) {
+        // 2. Busquem els partits futurs d'aquest àrbitre
+        // (Pots treure 'where data > now' si vols enviar també els passats per provar)
+        $partits = Partit::where('arbitre_id', $arbitre->id)
+                         ->orderBy('data', 'asc')
+                         ->get();
+
+        // 3. Enviem el correu si té partits
+        if ($partits->count() > 0) {
+            Mail::to($arbitre->email)->send(new ArbitreAssignacions($arbitre, $partits));
+            $comptador++;
+        }
+    }
+
+    return "Correus enviats correctament a {$comptador} àrbitres!";
+})->middleware('auth');
 
 require __DIR__.'/auth.php';
