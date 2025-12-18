@@ -59,4 +59,9 @@ class PartitController extends Controller
         return redirect()->route('partits.index')
                         ->with('success', 'Partit eliminat correctament.');
     }
+
+    public function historic()
+    {
+        return view('partits.historic');
+    }
 }

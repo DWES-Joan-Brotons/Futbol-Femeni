@@ -21,11 +21,16 @@
                     <x-nav-link :href="route('jugadores.index')" :active="request()->routeIs('jugadores.*')">
                         {{ __('Jugadores') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('partits.index')" :active="request()->routeIs('partits.*')">
+                    <x-nav-link :href="route('partits.index')" :active="request()->routeIs('partits.index')">
                         {{ __('Partits') }}
                     </x-nav-link>
+                    
+                    {{-- NOU ENLLAÇ HISTÒRIC --}}
+                    <x-nav-link :href="route('partits.historic')" :active="request()->routeIs('partits.historic')">
+                        {{ __('Històric') }}
+                    </x-nav-link>
 
-                    {{-- ENLLAÇOS DE CREACIÓ (NOMÉS VISIBLES SI TENS PERMÍS) --}}
+                    {{-- Enllaços Creació --}}
                     @can('create', App\Models\Equip::class)
                         <x-nav-link :href="route('equips.create')" :active="request()->routeIs('equips.create')" class="text-blue-600">
                             {{ __('+ Equip') }}
@@ -135,8 +140,11 @@
             <x-responsive-nav-link :href="route('jugadores.index')" :active="request()->routeIs('jugadores.*')">
                 {{ __('Jugadores') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('partits.index')" :active="request()->routeIs('partits.*')">
+            <x-responsive-nav-link :href="route('partits.index')" :active="request()->routeIs('partits.index')">
                 {{ __('Partits') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('partits.historic')" :active="request()->routeIs('partits.historic')">
+                {{ __('Històric') }}
             </x-responsive-nav-link>
 
             {{-- Responsive Links amb protecció --}}

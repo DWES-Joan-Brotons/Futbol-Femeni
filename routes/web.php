@@ -28,9 +28,12 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    // Rutas accesibles per tothom autenticat (la Policy filtra permisos específics)
-    Route::resource('equips', EquipController::class); // <--- MOGUT AQUÍ
+    // Rutas accesibles per tothom autenticat
+    Route::resource('equips', EquipController::class);
     
+    // RUTA NOVA PER A L'HISTÒRIC
+    Route::get('/historic', [PartitController::class, 'historic'])->name('partits.historic');
+
     // Rutas de lectura/escriptura generals
     Route::resource('partits', PartitController::class);
     Route::resource('jugadores', JugadoraController::class)->parameter('jugadores', 'jugadora');
@@ -40,10 +43,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Rutas SOLO para ADMIN
     Route::middleware(['role:admin'])->group(function () {
-        // Només l'admin pot modificar estadis
         Route::resource('estadis', EstadiController::class)->except(['index', 'show']);
     });
 });
+
 Route::get('language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'es', 'ca'])) {
         Session::put('locale', $locale);
@@ -51,19 +54,17 @@ Route::get('language/{locale}', function ($locale) {
     return redirect()->back();
 })->name('language.switch');
 
+// Ruta per provar l'enviament de correus als àrbitres manualment
 Route::get('/enviar-arbitres', function () {
-    // 1. Obtenim tots els usuaris amb rol 'arbitre'
     $arbitres = User::where('role', 'arbitre')->get();
     $comptador = 0;
 
     foreach ($arbitres as $arbitre) {
-        // 2. Busquem els partits futurs d'aquest àrbitre
-        // (Pots treure 'where data > now' si vols enviar també els passats per provar)
         $partits = Partit::where('arbitre_id', $arbitre->id)
+                         ->where('data', '>=', now()) // Millor filtrar només futurs
                          ->orderBy('data', 'asc')
                          ->get();
 
-        // 3. Enviem el correu si té partits
         if ($partits->count() > 0) {
             Mail::to($arbitre->email)->send(new ArbitreAssignacions($arbitre, $partits));
             $comptador++;
