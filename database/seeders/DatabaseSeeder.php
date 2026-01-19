@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,16 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-        
+        // L'ordre és important per les claus foranes (team_id)
         $this->call([
-            UserSeeder::class,
-            EstadisSeeder::class,
-            EquipsSeeder::class,
-            JugadoresSeeder::class,
+            EstadisSeeder::class,   // Primer estadis
+            EquipsSeeder::class,    // Segon equips (que usen estadis)
+            UserSeeder::class,      // Tercer usuaris (que poden ser d'un equip)
+            JugadoresSeeder::class, 
             PartitsSeeder::class,
         ]);
     }

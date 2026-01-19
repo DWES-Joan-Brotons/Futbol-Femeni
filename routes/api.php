@@ -6,16 +6,23 @@ use App\Http\Controllers\Api\JugadoraController;
 use App\Http\Controllers\Api\EstadiController;
 use App\Http\Controllers\Api\EquipController;
 use App\Http\Controllers\Api\PartitController;
-use App\Http\Controllers\Api\AuthController; // Assegura't d'importar el controlador
+use App\Http\Controllers\Api\AuthController; 
 
-// Grup de rutes protegides per Sanctum
+// RUTES PÚBLIQUES D'AUTENTICACIÓ
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+
+// RUTES PROTEGIDES (Token necessari)
 Route::middleware('auth:sanctum')->group(function () {
     
-    // Ruta sol·licitada: Retorna l'usuari autenticat i els seus rols
+    // Logout
+    Route::post('logout', [AuthController::class, 'logout']);
+
+    // Perfil (Retorna usuari i rol)
     Route::get('/profile', [AuthController::class, 'profile']);
     
-    // (Opcional) Si vols mantenir l'estàndard /user però usant el controlador:
-    // Route::get('/user', [AuthController::class, 'profile']);
+    // (Opcional) També pots mantenir /user si ho prefereixes
+    Route::get('/user', [AuthController::class, 'profile']);
 });
 
 // ... la resta de les teves rutes apiResource ...
