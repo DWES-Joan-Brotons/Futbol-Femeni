@@ -18,6 +18,7 @@ class EquipController extends Controller
 
     public function store(StoreEquipRequest $request)
     {
+        return response()->json($request->validated(), 201);
         $equip = Equip::create($request->validated());
         return response()->json(new EquipResource($equip), 201);
     }

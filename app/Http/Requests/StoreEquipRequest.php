@@ -9,6 +9,7 @@ class StoreEquipRequest extends FormRequest
 {
     public function authorize(): bool
     {
+        return true; // Permet a tothom, però el control d'accés es fa al controller o mitjançant policies
         // Només els usuaris amb permís de crear equips (admins) poden fer això
         return $this->user()->can('create', Equip::class);
     }

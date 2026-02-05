@@ -46,7 +46,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Gestió d'errors generals del servidor (500)
         $exceptions->render(function (\Throwable $e, Request $request) {
             if ($request->is('api/*')) {
-                return response()->json(['message' => 'Error del servidor.'], 500);
+                return response()->json(['message' => "Error del servidor: {$e->getMessage()}"], 500);
             }
         });
     })->create();
