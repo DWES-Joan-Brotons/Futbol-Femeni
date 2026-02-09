@@ -49,6 +49,7 @@ class PartitController extends Controller
     public function update(UpdatePartitRequest $request, Partit $partit)
     {
         $this->servei->actualitzar($partit->id, $request->validated());
+        PartitActualitzat::dispatch($partit->id);
         return redirect()->route('partits.index')
                         ->with('success', 'Partit actualitzat correctament.');
     }

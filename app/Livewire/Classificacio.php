@@ -6,9 +6,24 @@ use Livewire\Component;
 use App\Models\Equip;
 use App\Models\Partit;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
+
 
 class Classificacio extends Component
 {
+
+    #[On('echo:classificacio,partit.resultat')]
+    #[On('classificacio-refresh')]
+    public function refreshFromBroadcast(): void
+    {
+        // Opció 1: si fas la consulta en render(), n'hi ha prou amb refrescar.
+        $this->dispatch('$refresh');
+
+        // Opció 2: si tens un mètode específic, crida'l ací.
+        // $this->calcularClassificacio();
+    }
+
+
     // Variables para controlar la ordenación
     public $sortCol = 'punts'; // Columna por defecto
     public $sortAsc = false;   // Dirección por defecto (Descendente para puntos)
