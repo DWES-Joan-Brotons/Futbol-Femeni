@@ -38,7 +38,7 @@
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
-
+            <a href="{{ route('google.redirect') }}">Inicia sessió amb Google</a>
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>

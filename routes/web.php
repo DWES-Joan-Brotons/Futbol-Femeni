@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Partit;
 use App\Mail\ArbitreAssignacions;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -73,5 +74,9 @@ Route::get('/enviar-arbitres', function () {
 
     return "Correus enviats correctament a {$comptador} àrbitres!";
 })->middleware('auth');
+
+Route::get('/auth/google/redirect', [AuthController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
+
 
 require __DIR__.'/auth.php';

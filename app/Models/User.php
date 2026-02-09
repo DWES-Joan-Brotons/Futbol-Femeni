@@ -15,7 +15,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',     // 'admin', 'manager', 'arbitre'
-        'team_id',  // Solo para managers
+        'team_id', 
+        'google_id',
+        'avatar', // Solo para managers
     ];
 
     protected $hidden = [
