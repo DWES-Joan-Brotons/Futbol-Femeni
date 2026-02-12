@@ -8,6 +8,7 @@ use App\Models\Estadi;
 use App\Services\PartitService;
 use App\Http\Requests\StorePartitRequest;
 use App\Http\Requests\UpdatePartitRequest;
+use App\Events\PartitActualitzat;
 
 class PartitController extends Controller
 {
